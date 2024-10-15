@@ -1,0 +1,64 @@
+body {
+    background-color: #f7f7f7;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+h1 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #28a745;
+}
+
+#searchInput {
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.checkBtn {
+    background-color: #28a745;
+    color: white;
+    margin-right: 20px;
+}
+
+.checkBtn:hover {
+    background-color: #218838;
+}
+
+.deleteBtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.deleteBtn:hover {
+    background-color: #c82333;
+}
+
+.clearBtn {
+    background-color: #dc3545;
+    color: white;
+}
