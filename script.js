@@ -6,7 +6,6 @@ const searchInput = document.getElementById('searchInput');
 
 let tasks = [];
 
-// استرجاع المهام من Local Storage عند تحميل الصفحة
 if (localStorage.getItem('tasks')) {
     tasks = JSON.parse(localStorage.getItem('tasks'));
     displayTasks(); 
@@ -45,7 +44,8 @@ function displayTasks() {
             taskObj.completed = !taskObj.completed; 
             localStorage.setItem('tasks', JSON.stringify(tasks)); 
         });
-        deleteBtn.style.marginLeft = '20px'; 
+        checkBtn.style.marginLeft = '10px'; 
+        deleteBtn.style.marginLeft = '10px'; 
 
         if (taskObj.completed) {
             li.classList.add('completed'); 
@@ -73,14 +73,43 @@ clearAllBtn.addEventListener('click', () => {
 });
 
 searchInput.addEventListener('keyup', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const listItems = taskList.getElementsByTagName('li');
-
-    for (let i = 0; i < listItems.length; i++) {
-        let task = listItems[i].textContent.toLowerCase();
-        listItems[i].style.display = task.includes(searchTerm) ? '' : 'none';
-    }
+    const searchTerm = searchInput.value.toLowerCase(); 
+    const filteredTasks = tasks.filter(taskObj => taskObj.name.toLowerCase().includes(searchTerm));
+    displayFilteredTasks(filteredTasks); 
 });
+
+function displayFilteredTasks(filteredTasks) {
+    taskList.innerHTML = ''; 
+    filteredTasks.forEach((taskObj, index) => {
+        const li = document.createElement('li');
+        li.textContent = taskObj.name;
+        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+        const deleteBtn = createButton('Delete', 'btn-danger', () => {
+            const taskIndex = tasks.findIndex(t => t.name === taskObj.name);
+            deleteTask(taskIndex); 
+        });
+
+        const checkBtn = createButton('Check', 'btn-success', () => {
+            li.classList.toggle('completed');
+            taskObj.completed = !taskObj.completed; 
+            localStorage.setItem('tasks', JSON.stringify(tasks)); 
+        });
+        checkBtn.style.marginLeft = '10px'; 
+        deleteBtn.style.marginLeft = '10px'; 
+
+        if (taskObj.completed) {
+            li.classList.add('completed'); 
+        }
+
+        const btnContainer = document.createElement('div');
+        btnContainer.appendChild(checkBtn);
+        btnContainer.appendChild(deleteBtn);
+
+        li.appendChild(btnContainer);
+        taskList.appendChild(li);
+    });
+}
 
 function createButton(text, className, onClick) {
     const button = document.createElement('button');
